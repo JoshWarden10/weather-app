@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-5">
         <select id="select-location" class="w-full">
             <option></option>
         </select>
@@ -51,8 +51,6 @@
 
                         processResults: function(data)
                         {
-                            console.log('AJAX RESPONSE:', data);
-
                             return {
                                 results: data.map(function(location)
                                 {
@@ -86,15 +84,11 @@
 
                 $('#select-location').on('select2:open', function()
                 {
-                    $('.select2-container--open .select2-search__field')
-                        .attr('placeholder', 'Enter a city or postcode...');
+                    $('.select2-container--open .select2-search__field').attr('placeholder', 'Enter a city or postcode...');
                 });
                 $('#select-location').on('select2:select', function(e)
                 {
-                    self.$emit(
-                        'locationSelected',
-                        e.params.data
-                    );
+                    self.$emit('locationSelected', e.params.data);
                 });
             }
         }

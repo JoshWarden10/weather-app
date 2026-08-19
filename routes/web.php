@@ -9,3 +9,4 @@ Route::get('/', function () {
 });
 
 Route::get('/weather/locations', [WeatherController::class, 'fetchLocations']);
+Route::get('/weather/forecast', [WeatherController::class, 'fetchWeather']);
