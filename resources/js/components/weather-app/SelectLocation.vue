@@ -27,6 +27,15 @@
                     minimumInputLength: 2,
                     width: '100%',
 
+                    language:
+                    {
+                        inputTooShort: function()
+                        {
+                            return '';
+                        }
+                    },
+
+
                     ajax:
                     {
                         url: '/weather/locations',
@@ -75,6 +84,11 @@
                     }
                 });
 
+                $('#select-location').on('select2:open', function()
+                {
+                    $('.select2-container--open .select2-search__field')
+                        .attr('placeholder', 'Enter a city or postcode...');
+                });
                 $('#select-location').on('select2:select', function(e)
                 {
                     self.$emit(
