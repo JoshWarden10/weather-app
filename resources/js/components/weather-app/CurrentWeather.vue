@@ -5,7 +5,7 @@
                 <div class="w-full">
                     <p class="text-base font-medium text-blue-400">Showing the current weather for:</p>
                     <h2 class="mt-1 text-2xl font-semibold text-gray-900"><i class="fas fa-location-dot text-blue-400"></i> {{ location.text }}</h2>
-                    <div class="flex items-center gap-10 mt-4">
+                    <div class="flex items-center gap-8 mt-5">
                         <div class="flex flex-col gap-2">
                             <div class="flex items-start">
                                 <span class="text-6xl font-semibold tracking-tight text-gray-900">{{ Math.round(weather.current.temperature_2m) }}°</span>
