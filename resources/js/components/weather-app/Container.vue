@@ -14,10 +14,15 @@
                     </div>
                 </div>
             </div>
-            
-            <CurrentWeather v-if="weather && selectedLocation"
-                :weather="weather"
-                :location="selectedLocation"></CurrentWeather>
+        
+            <template v-if="weather && selectedLocation">
+                <CurrentWeather
+                    :weather="weather"
+                    :location="selectedLocation"></CurrentWeather>
+                
+                <Forecast
+                    :weather="weather"></Forecast>
+            </template>
         </div>
     </div>
 </template>
@@ -26,12 +31,14 @@
     import SelectLocation from './SelectLocation.vue';
     import CurrentWeather from './CurrentWeather.vue';
     import CurrentWeatherLoading from './CurrentWeatherLoading.vue';
+    import Forecast from './Forecast.vue';
 
     export default {
         components: {
             SelectLocation,
             CurrentWeather,
-            CurrentWeatherLoading
+            CurrentWeatherLoading,
+            Forecast
         },
 
         data: function() {
