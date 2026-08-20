@@ -28,6 +28,12 @@
                 <Forecast
                     :weather="weather"></Forecast>
             </template>
+
+            <div v-else-if="!selectedLocation" class="flex flex-col items-center justify-center rounded-md border border-gray-200 bg-white px-6 py-10 sm:py-16 text-center">
+                <i class="fas fa-cloud-sun text-3xl sm:text-4xl lg:text-5xl text-blue-300"></i>
+                <h2 class="mt-3 sm:mt-5 text-base sm:text-lg lg:text-xl font-semibold text-gray-900">Search for a location</h2>
+                <p class="mt-2 max-w-md text-xs sm:text-sm text-gray-500">Enter a city or postcode above to view the current weather, hourly temperatures and 5-day forecast.</p>
+            </div>
         </div>
     </div>
 </template>
