@@ -1,9 +1,9 @@
 <template>
     <div class="mt-6 bg-white rounded-md border border-gray-200">
         <div class="p-6">
-            <h2 class="text-xl font-semibold text-gray-900">Next 24 hours</h2>
-            <p class="mt-1 text-sm text-gray-500">Temperature forecast</p>
-            <div ref="chart" class="mt-6"></div>
+            <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">Next 24 hours</h2>
+            <p class="mt-1 text-xs sm:text-sm text-gray-500">Temperature forecast</p>
+            <div ref="chart" class="mt-4 sm:mt-6"></div>
         </div>
     </div>
 </template>

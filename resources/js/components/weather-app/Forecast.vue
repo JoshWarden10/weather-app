@@ -1,7 +1,7 @@
 <template>
     <div class="mt-6 bg-white rounded-md border border-gray-200">
         <div class="pt-6">
-            <h2 class="text-xl font-semibold text-gray-900 px-6">Upcoming 5-day forecast</h2>
+            <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 px-6">Upcoming 5-day forecast</h2>
 
             <div class="mt-6 grid grid-cols-1 sm:grid-cols-5 border-t border-t-gray-200">
                 <div v-for="(day, index) in forecastDays" :key="day.date" class="flex flex-col items-center text-center px-4 py-5" :class="{'border-t sm:border-t-0 sm:border-l border-gray-200': index > 0}">
