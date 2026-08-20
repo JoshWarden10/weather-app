@@ -3,7 +3,7 @@
         <div class="mx-auto max-w-6xl">
             <h1 class="text-3xl font-bold mb-5"><i class="fas fa-cloud bg-clip-text bg-gradient-to-r text-transparent from-blue-200 to-gray-400 mr-2"></i>JoshCorp Weather</h1>
             <SelectLocation
-                @location-selected="locationSelected"></SelectLocation>
+                v-model="selectedLocation"></SelectLocation>
 
             <div class="mt-6">
                 <CurrentWeatherLoading v-if="loading"></CurrentWeatherLoading>
@@ -54,12 +54,16 @@
                 error: null
             }
         },
-        mounted() {
-        },
+
         methods: {
             locationSelected: function(location)
             {
                 this.selectedLocation = location;
+
+                localStorage.setItem(
+                    'weatherLocation',
+                    JSON.stringify(location)
+                );
 
                 this.fetchWeather();
             },
@@ -87,6 +91,39 @@
                 .finally(() => {
                     this.loading = false;
                 });
+            }
+        },
+
+        watch: {
+            selectedLocation: function(location)
+            {
+                if (!location) {
+                    return;
+                }
+
+                localStorage.setItem(
+                    'weatherLocation',
+                    JSON.stringify(location)
+                );
+
+                this.fetchWeather();
+            }
+        },
+
+        created() {
+            const savedLocation = localStorage.getItem('weatherLocation');
+
+            if (!savedLocation) {
+                return;
+            }
+
+            try {
+                this.selectedLocation = JSON.parse(savedLocation);
+
+                this.fetchWeather();
+            }
+            catch (error) {
+                localStorage.removeItem('weatherLocation');
             }
         }
     }

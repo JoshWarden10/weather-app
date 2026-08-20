@@ -1,6 +1,6 @@
 <template>
     <div class="mb-5">
-        <select id="select-location" class="w-full">
+        <select id="select-location" ref="selectLocation" class="w-full">
             <option></option>
         </select>
     </div>
@@ -8,14 +8,16 @@
 <script>
     export default {
         props: {
-        },
-        data: function() {
-            return {
+            modelValue: {
+                type: Object,
+                default: null
             }
         },
-        mounted() {
-            this.initSelectDropdown();
-        },
+
+        emits: [
+            'update:modelValue'
+        ],
+
         methods: {
 
             initSelectDropdown: function()
@@ -88,9 +90,78 @@
                 });
                 $('#select-location').on('select2:select', function(e)
                 {
-                    self.$emit('locationSelected', e.params.data);
+                    self.$emit('update:modelValue', e.params.data);
                 });
+            },
+
+            addSelectedOption: function(location)
+            {
+                const select = $(this.$refs.selectLocation);
+                const locationId = String(location.id);
+
+                const existingOption = select.find(
+                    'option[value="' + locationId + '"]'
+                );
+
+                if (existingOption.length) {
+                    return;
+                }
+
+                const option = new Option(
+                    location.text,
+                    locationId,
+                    true,
+                    true
+                );
+
+                select.append(option);
+            },
+
+            setSelectedLocation: function(location)
+            {
+                const select = $(this.$refs.selectLocation);
+                const locationId = String(location.id);
+
+                this.addSelectedOption(location);
+
+                select
+                    .val(locationId)
+                    .trigger('change.select2');
             }
-        }
+        },
+
+        watch: {
+            modelValue: function(location)
+            {
+                if (location) {
+                    this.setSelectedLocation(location);
+                }
+            }
+        },
+
+        beforeUnmount()
+        {
+            const select = $(this.$refs.selectLocation);
+
+            select.off();
+
+            if (select.hasClass('select2-hidden-accessible')) {
+                select.select2('destroy');
+            }
+        },
+
+        mounted() {
+            if (this.modelValue) {
+                this.addSelectedOption(this.modelValue);
+            }
+
+            this.initSelectDropdown();
+
+            if (this.modelValue) {
+                $(this.$refs.selectLocation)
+                    .val(String(this.modelValue.id))
+                    .trigger('change.select2');
+            }
+        },
     }
 </script>
