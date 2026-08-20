@@ -20,6 +20,9 @@
                     :weather="weather"
                     :location="selectedLocation"></CurrentWeather>
                 
+                <HourlyForecast
+                    :weather="weather"></HourlyForecast>
+                
                 <Forecast
                     :weather="weather"></Forecast>
             </template>
@@ -32,13 +35,15 @@
     import CurrentWeather from './CurrentWeather.vue';
     import CurrentWeatherLoading from './CurrentWeatherLoading.vue';
     import Forecast from './Forecast.vue';
+    import HourlyForecast from './HourlyForecast.vue';
 
     export default {
         components: {
             SelectLocation,
             CurrentWeather,
             CurrentWeatherLoading,
-            Forecast
+            Forecast,
+            HourlyForecast
         },
 
         data: function() {
