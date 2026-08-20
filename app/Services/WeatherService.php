@@ -14,7 +14,8 @@ class WeatherService
         return Cache::remember(
             $cacheKey,
             now()->addMinutes(60),
-            function () use ($location) {
+            function () use ($location)
+            {
                 $response = Http::timeout(5)->get(
                     'https://geocoding-api.open-meteo.com/v1/search',
                     [
@@ -39,7 +40,8 @@ class WeatherService
         return Cache::remember(
             $cacheKey,
             now()->addMinutes(10),
-            function () use ($latitude, $longitude) {
+            function () use ($latitude, $longitude)
+            {
                 $response = Http::timeout(5)->get(
                     'https://api.open-meteo.com/v1/forecast',
                     [

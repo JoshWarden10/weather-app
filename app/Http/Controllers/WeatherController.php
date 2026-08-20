@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class WeatherController extends Controller
 {
-    public function fetchLocations(Request $request, WeatherService $weatherService) 
+    public function fetchLocations(Request $request, WeatherService $weatherService)
     {
         $validatedResponse = $request->validate([
             'search' => ['required', 'string', 'min:2'],

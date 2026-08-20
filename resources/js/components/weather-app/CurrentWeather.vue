@@ -10,7 +10,7 @@
                             <div class="flex items-start">
                                 <span class="text-6xl font-semibold tracking-tight text-gray-900">{{ Math.round(weather.current.temperature_2m) }}°</span>
                             </div>
-                            <p class="text-sm text-gray-500">Feels like {{ Math.round(weather.current.apparent_temperature) }}° </p>
+                            <p class="text-sm text-gray-500">Feels like {{ Math.round(weather.current.apparent_temperature) }}°</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <i :class="['fas', currentCondition.icon, currentCondition.colour]" class="text-5xl"></i>
@@ -43,28 +43,28 @@
 </template>
 
 <script>
-import { getWeatherCondition } from '../../utils/weather';
+    import { getWeatherCondition } from '../../utils/weather';
 
-export default {    
-    props: {
-        weather: {
-            type: Object,
-            required: true
+    export default {
+        props: {
+            weather: {
+                type: Object,
+                required: true
+            },
+
+            location: {
+                type: Object,
+                required: true
+            }
         },
 
-        location: {
-            type: Object,
-            required: true
-        }
-    },
-
-    computed: {
-        currentCondition: function()
-        {
-            return getWeatherCondition(
-                this.weather.current.weather_code
-            );
+        computed: {
+            currentCondition: function()
+            {
+                return getWeatherCondition(
+                    this.weather.current.weather_code
+                );
+            }
         }
     }
-}
 </script>

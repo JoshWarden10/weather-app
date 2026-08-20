@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\WeatherController;
-
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('welcome');
 });
 

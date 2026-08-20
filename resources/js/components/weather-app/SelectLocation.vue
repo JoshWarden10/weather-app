@@ -5,6 +5,7 @@
         </select>
     </div>
 </template>
+
 <script>
     export default {
         props: {
@@ -18,28 +19,61 @@
             'update:modelValue'
         ],
 
-        methods: {
+        watch: {
+            modelValue: function(location)
+            {
+                if (location)
+                {
+                    this.setSelectedLocation(location);
+                }
+            }
+        },
 
+        mounted()
+        {
+            if (this.modelValue)
+            {
+                this.addSelectedOption(this.modelValue);
+            }
+
+            this.initSelectDropdown();
+
+            if (this.modelValue)
+            {
+                this.setSelectedLocation(this.modelValue);
+            }
+        },
+
+        beforeUnmount()
+        {
+            const select = $(this.$refs.selectLocation);
+
+            select.off();
+
+            if (select.hasClass('select2-hidden-accessible'))
+            {
+                select.select2('destroy');
+            }
+        },
+
+        methods: {
             initSelectDropdown: function()
             {
-                const self = this;
+                const select = $(this.$refs.selectLocation);
 
-                 $('#select-location').select2({
+                select.select2({
                     placeholder: 'Enter a city or postcode...',
                     minimumInputLength: 2,
                     width: '100%',
 
-                    language:
-                    {
+                    language: {
                         inputTooShort: function()
                         {
                             return '';
                         }
                     },
 
-
-                    ajax:
-                    {
+                    ajax: {
                         url: '/weather/locations',
                         dataType: 'json',
                         delay: 300,
@@ -72,25 +106,19 @@
                                     };
                                 })
                             };
-                        },
-
-                        error: function(xhr, status, error)
-                        {
-                            console.log('SELECT2 AJAX ERROR');
-                            console.log('status:', status);
-                            console.log('error:', error);
-                            console.log('response:', xhr.responseText);
                         }
                     }
                 });
 
-                $('#select-location').on('select2:open', function()
+                select.on('select2:open', () =>
                 {
-                    $('.select2-container--open .select2-search__field').attr('placeholder', 'Enter a city or postcode...');
+                    $('.select2-container--open .select2-search__field')
+                        .attr('placeholder', 'Enter a city or postcode...');
                 });
-                $('#select-location').on('select2:select', function(e)
+
+                select.on('select2:select', (event) =>
                 {
-                    self.$emit('update:modelValue', e.params.data);
+                    this.$emit('update:modelValue', event.params.data);
                 });
             },
 
@@ -103,7 +131,8 @@
                     'option[value="' + locationId + '"]'
                 );
 
-                if (existingOption.length) {
+                if (existingOption.length)
+                {
                     return;
                 }
 
@@ -128,40 +157,6 @@
                     .val(locationId)
                     .trigger('change.select2');
             }
-        },
-
-        watch: {
-            modelValue: function(location)
-            {
-                if (location) {
-                    this.setSelectedLocation(location);
-                }
-            }
-        },
-
-        beforeUnmount()
-        {
-            const select = $(this.$refs.selectLocation);
-
-            select.off();
-
-            if (select.hasClass('select2-hidden-accessible')) {
-                select.select2('destroy');
-            }
-        },
-
-        mounted() {
-            if (this.modelValue) {
-                this.addSelectedOption(this.modelValue);
-            }
-
-            this.initSelectDropdown();
-
-            if (this.modelValue) {
-                $(this.$refs.selectLocation)
-                    .val(String(this.modelValue.id))
-                    .trigger('change.select2');
-            }
-        },
+        }
     }
 </script>

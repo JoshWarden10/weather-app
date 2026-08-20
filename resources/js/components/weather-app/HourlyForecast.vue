@@ -23,19 +23,7 @@
         {
             return {
                 chart: null
-            }
-        },
-
-        mounted()
-        {
-            this.renderChart();
-        },
-
-        beforeUnmount()
-        {
-            if (this.chart) {
-                this.chart.destroy();
-            }
+            };
         },
 
         watch: {
@@ -49,10 +37,24 @@
             }
         },
 
+        mounted()
+        {
+            this.renderChart();
+        },
+
+        beforeUnmount()
+        {
+            if (this.chart)
+            {
+                this.chart.destroy();
+            }
+        },
+
         methods: {
             getHourlyData: function()
             {
-                const currentIndex = this.weather.hourly.time.findIndex((time) => {
+                const currentIndex = this.weather.hourly.time.findIndex((time) =>
+                {
                     return time >= this.weather.current.time;
                 });
 
@@ -79,9 +81,11 @@
                     chart: {
                         type: 'area',
                         height: 300,
+
                         toolbar: {
                             show: false
                         },
+
                         zoom: {
                             enabled: false
                         }
@@ -98,7 +102,8 @@
                     ],
 
                     xaxis: {
-                        categories: hourly.times.map((time) => {
+                        categories: hourly.times.map((time) =>
+                        {
                             return this.formatTime(time);
                         }),
 
@@ -107,7 +112,7 @@
                             hideOverlappingLabels: true
                         }
                     },
-                    
+
                     yaxis: {
                         labels: {
                             formatter: function(value)
@@ -136,14 +141,16 @@
 
                     tooltip: {
                         y: {
-                            formatter: (value) => {
+                            formatter: (value) =>
+                            {
                                 return value + ' ' + this.weather.hourly_units.temperature_2m;
                             }
                         }
                     }
                 };
 
-                if (this.chart) {
+                if (this.chart)
+                {
                     this.chart.destroy();
                 }
 
